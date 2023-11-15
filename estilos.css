@@ -1,0 +1,40 @@
+.titulo{
+    color: gold;
+}
+#mesa{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    
+}
+#tablero{
+    align-self: center;
+    background-color:lightgreen;
+    width: 768px;
+    height: 768px;
+    display: flex;
+    border: 5px double green;
+    flex-wrap: wrap;
+}
+
+.suelo{
+    background-color: lightgreen;
+    width: 20px;
+    height: 20px;
+}
+
+
+.pared{
+    background-color: green;
+    width: 20px;
+    height: 20px;
+}
+
+
+
+.suelo{
+    background-color: lightgray;
+    width: 20px;
+    height: 20px;
+}
+
