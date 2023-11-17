@@ -1,40 +1,195 @@
-.titulo{
+
+#titulo{
     color: gold;
+    text-align: center;
+    font-weight: bold;
+    font-family:fantasy;
+    padding: 0px;
+    margin: 10px;
+    font-size: 50px;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
 }
+
 #mesa{
     width: 100%;
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
-    
 }
+
 #tablero{
     align-self: center;
-    background-color:lightgreen;
-    width: 768px;
-    height: 768px;
+    justify-self: center;
+    background-color: green;
+    width: 780px;
+    height: 780px;
     display: flex;
     border: 5px double green;
     flex-wrap: wrap;
+    border-radius: 3px;
+}
+
+#temporizador{
+    float: left;
+    background-color: gold;
+    font-size: 4em;
+    border-radius: 5px;
+    font-weight: bold;
+    position: absolute;
+    top: 25px;
+    left: 20px;
+    padding: 10px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+#btnAjustes{
+    float: right;
+    background-color: gold;
+    border-radius: 5px;
+    position: fixed;
+    top: 5px;
+    right: 2px;
+    padding: 10px;
+    height: 50px;
+    width:50px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#menuAjustes{
+    display: none;
+    width: 80%;
+    height: 80%;
+    position: absolute;
+    top: 9%;
+    left: 10%;
+    background-color: lightgreen;
+    border: 5px double green;
+
 }
 
 .suelo{
     background-color: lightgreen;
-    width: 20px;
-    height: 20px;
+    width: 50px;
+    height:50px;
+    border: 1.5px dotted green;
+    border-radius: 5px;
 }
-
 
 .pared{
     background-color: green;
-    width: 20px;
-    height: 20px;
+    width: 50px;
+    height: 50px;
+    border: 1.5px solid darkgreen;
 }
 
-
-
-.suelo{
+.muro{
     background-color: lightgray;
-    width: 20px;
-    height: 20px;
+    width: 50px;
+    height: 50px;
+    border: 1.5px solid gray;
+}
+
+#casilla0{
+    background-color: red;
+}
+
+#casilla14{
+    background-color: blue;
+}
+
+#casilla210{
+    background-color: white;
+}
+
+#casilla224{
+    background-color: gold;
+}
+
+#casilla112{
+    background-color: black;
+}
+#casilla112 img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.contenedor{
+    height: auto;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between ;
+}
+
+#contenedor1{
+    align-items: flex-end;
+}
+
+#contenedor2{
+    align-items: flex-start;
+}
+
+.tarjeta{
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 5px;
+    width: 200px;
+}
+
+.tarjeta img{
+    height: 60px;
+    width: 60px;
+    border-radius: 50px;
+}
+
+#blanco{
+    float: right;
+    background-color: antiquewhite;
+    border: 2px double black;
+
+}
+
+#amarillo{
+    background-color: lightgoldenrodyellow;
+    border: 2px double black;
+}
+
+#azul{
+    background-color: lightcyan;
+    border: 2px double black;
+}
+
+#rojo{
+    float: right;
+    background-color: lightcoral;
+    border: 2px double black;
+}
+
+img {
+    height: 90%;
+    width: 90%;
+    border-radius: 50px;
+    margin: auto;
+}
+
+#dado{
+    position: absolute;
+    top: 120px;
+    left: 30px;
+    
+}
+
+#instruccion{
+    position: absolute;
+    top: 120px;
+    right: 30px;
 }
 

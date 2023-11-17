@@ -3,14 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/38f6a19bdf.js" crossorigin="anonymous">//para iconos</script>
     <link rel="stylesheet" href="estilos.css">
     <script src="app.js"></script>
     <title>Minotaurus</title>
 </head>
 <body>
-    <h1 id="titulo">Minotaurus</h1>
+    <div id="cabezera">
+
+        <h1 id="titulo">Minotaurus</h1>
+        <div id="btnAjustes" onclick="abrirAjustes()"><i class="fa-solid fa-gears fa-2xl" style="color: #000000;"></i></div>
+    </div>
     <div id="mesa">
+        <div id="temporizador">00</div>
+        <div class="contenedor" id="contenedor1">
+            <div id="rojo" class="tarjeta">
+                <img src="img/r2.jpg">
+                <p id="nombrerojo"></p>
+            </div>
+
+            <div id="blanco" class="tarjeta">
+                <img src="img/b2.jpg">
+                <p id="nombreblanco"></p>
+            </div>
+        </div>
+
         <div id="tablero"></div>
+
+        <div class="contenedor" id="contenedor2">
+            <div id="azul" class="tarjeta">
+                <img src="img/a1.jpg">
+                <p id="nombreazul"></p>
+            </div>
+            
+            <div id="amarillo" class="tarjeta">
+                <img src="img/y3.jpg">
+                <p id="nombreamarillo"></p>
+            </div>
+        </div>
+    </div>
+    <div id="cajaDado">
+        
+    </div>
+    <div id="instruccion">
+        
+    </div>
+    <button id="empezar" onclick="empezar()">Empezar()</button>
+    <div id="menuAjustes">
+        <h1 id="titulo">AJUSTES</h1>
     </div>
 </body>
 </html>
