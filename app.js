@@ -21,9 +21,13 @@ var jugadores;
 
 var turno;
 
-const ORDEN = ["rojo","azul","amarillo","blanco"];
+var orden;
 
 var dado;
+
+var  fichaActual;
+
+var movimientos;
 
 function empezar(){
     generarMuros();
@@ -32,16 +36,19 @@ function empezar(){
         ["Pepe","Josefa"],
         ["amarillo","blanco"]
     ];
+    orden = jugadores[1];
     aniadirJugadores();
-    turno = ORDEN[0];
+    turno = orden[0];
     mover(turno);
 }    
 
 function generarMuros(){
-    for (let i = 0; i < cantidadMuros; i++) {
+    for (let i = 0; i <= cantidadMuros; i++) {
         numero = Math.floor(Math.random() * 224);
         if(!estaEn(numero,PAREDES) && !estaEn(numero,muros) && !estaEn(numero,INICIALES)){
             muros.push(numero);
+        }else{
+            i--;
         }
     }
 }
@@ -70,7 +77,7 @@ function generarTablero(){
             casilla.setAttribute("class","suelo");
         }
         if(i==112){
-            casilla.innerHTML += '<img src="img/m3.jpg">'
+            casilla.innerHTML += '<img src="img/m3.jpg" id="fichaminotauro">'
         }
         casilla.setAttribute("id","casilla" + String(i));
         tablero.appendChild(casilla);
@@ -110,20 +117,54 @@ function generarFichas(color){
         default:
             break;
     }
-    ficha = '<img src="img/ficha' + color + '.jpg">';
-    document.getElementById('casilla' + casilla).innerHTML = ficha;
-    document.getElementById(color).innerHTML += ficha;
-    document.getElementById(color).innerHTML += ficha;
+    
+    document.getElementById('casilla' + casilla).innerHTML = '<img src="img/ficha' + color + '.jpg" id="ficha' + color + '">';
+    document.getElementById(color).innerHTML += '<img src="img/ficha' + color + '.jpg">';
+    document.getElementById(color).innerHTML += '<img src="img/ficha' + color + '.jpg">';
 }
 
-
 function mover(jugador){
-    if(dado!=""){
+    if(dado != "" && dado != null){
+        if(dado == 1){
+            fichaActual = document.getElementById('fichaminotauro');
+        }else if(dado == 2){
 
+        } else{  
+            fichaActual = document.getElementById('ficha' + turno);     
+        window.addEventListener("keydown", teclado);
+        }
     } else{
         document.getElementById('instruccion').innerHTML = "<p>Jugador " + jugador + " tira el dado</p>";
     }
+}
 
+function tirarDado(){
+    dado =  Math.floor(Math.random() * 6 + 1);
+    document.getElementById('cajaDado').innerText = dado;
+    console.log(dado);
+}
+
+
+
+
+
+
+
+function siguienteTurno(){
+    var turnoactual = turno;
+    var siguiente;
+    for(var i = 0; i < orden.length;i++){
+        if(orden[i]==turnoactual){
+            if(i+1 < orden.length){
+                siguiente = orden[i+1];
+            } else {
+                siguiente = orden[0];
+            }
+        }
+    }
+
+    turno = siguiente;
+    console.log(turno);
 }
 
 function abrirAjustes(){

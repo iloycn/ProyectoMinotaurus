@@ -180,16 +180,19 @@ img {
     margin: auto;
 }
 
-#dado{
+#cajaDado{
     position: absolute;
-    top: 120px;
+    top: 550px;
     left: 30px;
-    
+    width: 60px;
+    height: 60px;
+    background-color: grey;
+    border: 2px solid green;
 }
 
 #instruccion{
     position: absolute;
-    top: 120px;
+    top: 550px;
     right: 30px;
 }
 
