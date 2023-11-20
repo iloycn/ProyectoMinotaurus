@@ -9,9 +9,22 @@
     <title>Minotaurus</title>
 </head>
 <body>
-    <div id="cabezera">
 
-        <h1 id="titulo">Minotaurus</h1>
+    <div id="formulario">
+        <h1>Minotauro</h1>
+        <!-- Contenedor para los formularios hijos -->
+        <div id="formulariosHijos"></div>
+         <!-- Botón para agregar formulario hijo -->
+        <button class="agregar-btn" onclick="agregarFormularioHijo()" id="agregarBtn">Agregar Formulario</button>
+        <!-- Botón para empezar la partida -->
+        <button id="empezarBtn" onclick="empezar()">Empezar</button>
+        <audio id="audioElement">
+            <source src="audio/empezar.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <div id="cabezera">
+        <h1 id="titulo">Jugadores</h1>
         <div id="btnAjustes" onclick="abrirAjustes()"><i class="fa-solid fa-gears fa-2xl" style="color: #000000;"></i></div>
     </div>
     <div id="mesa">
@@ -41,14 +54,20 @@
                 <p id="nombreamarillo"></p>
             </div>
         </div>
+        <button id="cajaDado"  onclick="tirarDado()">
+            dado
+        </button>
+        <div id="instruccion">instruccion</div>
     </div>
-    <button id="cajaDado"  onclick="tirarDado()">
-        dado
-    </button>
-    <div id="instruccion">instruccion</div>
-    <button id="empezar" onclick="empezar()">Empezar()</button>
     <div id="menuAjustes">
         <h1 id="titulo">AJUSTES</h1>
+        <label for="volumen">Volumen:</label>
+        <input type="range" id="volumen" min="0" max="100" step="1" value="50" onchange="cambiarVolumen()">
+        <span id="valorVolumen"></span>
+        <!-- Otros ajustes del juego -->
+        <iframe width=auto height=auto src="https://www.youtube.com/embed/XCDsm5WgPzE?si=gZPYiSTeJ3DT69Co"
+        title="YouTube video player" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
 </body>
 </html>
