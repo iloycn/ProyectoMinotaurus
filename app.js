@@ -26,7 +26,7 @@ var turno;
 
 var orden;
 
-var dado;
+var dado = null;
 
 var fichaActual;
 
@@ -37,7 +37,6 @@ var contadorFormularios = 0;
 var maxFormularios = 4;
 
 var coloresUtilizados = [];
-
 
 function empezar() {
     generarMuros();
@@ -55,15 +54,12 @@ function empezar() {
 
     turno = orden[0];
 
-    do{
-        document.getElementById('dado').addEventListener("click",tirarDado);
-        actuar(turno);
-        siguienteTurno();
-    }while(!finDelJuego())
+    document.getElementById('instruccion').innerHTML = "<p>Jugador " + turno + " tira el dado</p>";
+    document.getElementById('cajaDado').addEventListener("click",tirarDado);
+
 }
 
 function guardarInformacion(){
-    
     for(var i = 0; i < contadorFormularios; i++){
         jugadores[0].push(document.getElementById('nombre' + String(i)).value);
         jugadores[1].push(document.getElementById('color' + String(i)).value);
@@ -168,36 +164,125 @@ function actuar(turno){
 }
 
 function moverMuros() {
+    document.getElementById('cajaDado').style.backgroundColor = "grey";
+    document.getElementById('cajaDado').innerText = "";
     document.getElementById('instruccion').innerHTML = "<p>Jugador " + turno + " mueve un muro</p>";
     console.log(moverMuros);
+    siguienteTurno()
 }
 
 function moverMino() {
+    document.getElementById('cajaDado').style.backgroundColor = "black";
+    document.getElementById('cajaDado').innerText = "";
     document.getElementById('instruccion').innerHTML = "<p>Jugador " + turno + " mueve al minotauro</p>";
     fichaActual = document.getElementById('fichaminotauro');
-    console.log(moverMino);
+
+    movimientos = 5;//movimientos minotauro
+    window.addEventListener("keydown", teclado);
 }
 
 
 function mover() {
-    document.getElementById('instruccion').innerHTML = "<p>Jugador " + turno + " mueve tu ficha" + dado + " casillas</p>";
+    document.getElementById('instruccion').innerHTML = "<p>Jugador " + turno + " mueve tu ficha " + dado + " casillas</p>";
     fichaActual = document.getElementById('ficha' + turno);
     window.addEventListener("keydown", teclado);
 
 }
 
-function tirarDado() {
-    dado = Math.floor(Math.random() * 6 + 1);
-    document.getElementById('cajaDado').innerText = dado;
-    console.log(dado);
-    actuar();
+
+function teclado(e) {
+    if(movimientos > 0){
+        switch (e.key) {
+            case "ArrowUp":
+                moveUp()
+                break;
+            case "ArrowLeft":
+                moveLeft()
+                break;
+            case "ArrowDown":
+                moveDown()
+                break;
+            case "ArrowRight":
+                moveRight()
+                break;
+        }
+    }
 }
 
+    function moveUp(e) {
+        var casillaActual = fichaActual.parentElement.getAttribute("id");
+        var numero = Number(casillaActual.slice(7));
+        if(numero>14){
+            var numeroNuevo = numero - 15;
+            var casillaNueva = "casilla" + String(numeroNuevo);
+            if(document.getElementById(casillaNueva).getAttribute("class") == "suelo"){
+                document.getElementById(casillaNueva).appendChild(fichaActual);
+                movimientos--;
+                if(movimientos == 0){
+                    siguienteTurno();
+                }
+            }
+        } 
+    }
+
+    function moveDown(e) {
+        var casillaActual = fichaActual.parentElement.getAttribute("id");
+        var numero = Number(casillaActual.slice(7));
+        if(numero<210){
+            var numeroNuevo = numero + 15;
+            var casillaNueva = "casilla" + String(numeroNuevo);
+            if(document.getElementById(casillaNueva).getAttribute("class") == "suelo"){
+                document.getElementById(casillaNueva).appendChild(fichaActual);
+                movimientos--;
+                if(movimientos == 0){
+                    siguienteTurno();
+                }
+            }
+        }
+    }
+
+    function moveLeft(e) {
+        var casillaActual = fichaActual.parentElement.getAttribute("id");
+        var numero = Number(casillaActual.slice(7));
+        if((numero) % 15 != 0){
+            var numeroNuevo = numero - 1;
+            var casillaNueva = "casilla" + String(numeroNuevo);
+            if(document.getElementById(casillaNueva).getAttribute("class") == "suelo"){
+                document.getElementById(casillaNueva).appendChild(fichaActual);
+                movimientos--;
+                if(movimientos == 0){
+                    siguienteTurno();
+                }
+            }
+        }
+    }
+
+    function moveRight(e) {
+        var casillaActual = fichaActual.parentElement.getAttribute("id");
+        var numero = Number(casillaActual.slice(7));
+        if((numero + 1) % 15 != 0){
+            var numeroNuevo = numero + 1;
+            var casillaNueva = "casilla" + String(numeroNuevo);
+            if(document.getElementById(casillaNueva).getAttribute("class") == "suelo"){
+                document.getElementById(casillaNueva).appendChild(fichaActual);
+                movimientos--;
+                if(movimientos == 0){
+                    siguienteTurno();
+                }
+            }
+        }
+    }
 
 
-
-
-
+function tirarDado() {
+    if(dado == null){
+    dado = Math.floor(Math.random() * 6 + 1);
+    document.getElementById('cajaDado').style.backgroundColor = "white";
+    document.getElementById('cajaDado').innerText = dado;
+    movimientos = dado;
+    actuar();
+    }
+}
 
 function siguienteTurno() {
     var turnoactual = turno;
@@ -211,9 +296,11 @@ function siguienteTurno() {
             }
         }
     }
-
     turno = siguiente;
-    console.log(turno);
+    dado = null;
+    window.removeEventListener("keydown", teclado);
+    document.getElementById('instruccion').innerHTML = "<p>Jugador " + turno + " tira el dado</p>";
+    document.getElementById('cajaDado').addEventListener("click",tirarDado);
 }
 
 function abrirAjustes() {
