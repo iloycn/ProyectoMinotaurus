@@ -116,6 +116,8 @@ function aniadirJugadores() {
 
 function generarTargeta(nombre, color) {
     document.getElementById('nombre' + color).innerText = nombre;
+    document.getElementById(color).innerHTML += '<img src="img/ficha' + color + '.jpg">';
+    document.getElementById(color).innerHTML += '<img src="img/ficha' + color + '.jpg">';
 }
 
 function generarFichas(color) {
@@ -136,10 +138,7 @@ function generarFichas(color) {
         default:
             break;
     }
-
     document.getElementById('casilla' + casilla).innerHTML = '<img src="img/ficha' + color + '.jpg" id="ficha' + color + '">';
-    document.getElementById(color).innerHTML += '<img src="img/ficha' + color + '.jpg">';
-    document.getElementById(color).innerHTML += '<img src="img/ficha' + color + '.jpg">';
 }
 
 function actuar(turno){
@@ -175,7 +174,6 @@ function moverMino() {
     document.getElementById('cajaDado').innerText = "";
     document.getElementById('instruccion').innerHTML = "<p>Jugador " + turno + " mueve al minotauro</p>";
     fichaActual = document.getElementById('fichaminotauro');
-
     movimientos = 5;//movimientos minotauro
     window.addEventListener("keydown", teclado);
 }
@@ -187,7 +185,6 @@ function mover() {
     window.addEventListener("keydown", teclado);
 
 }
-
 
 function teclado(e) {
     if(movimientos > 0){
@@ -208,70 +205,100 @@ function teclado(e) {
     }
 }
 
-    function moveUp(e) {
-        var casillaActual = fichaActual.parentElement.getAttribute("id");
-        var numero = Number(casillaActual.slice(7));
-        if(numero>14){
-            var numeroNuevo = numero - 15;
-            var casillaNueva = "casilla" + String(numeroNuevo);
-            if(document.getElementById(casillaNueva).getAttribute("class") == "suelo"){
-                document.getElementById(casillaNueva).appendChild(fichaActual);
-                movimientos--;
-                if(movimientos == 0){
-                    siguienteTurno();
-                }
+function moveUp(e) {
+    var casillaActual = fichaActual.parentElement.getAttribute("id");
+    var numero = Number(casillaActual.slice(7));
+    if(numero>14){
+        var numeroNuevo = numero - 15;
+        var casillaNueva = "casilla" + String(numeroNuevo);
+        if(document.getElementById(casillaNueva).getAttribute("class") == "suelo" && !casillaOcupada(document.getElementById(casillaNueva))){
+            document.getElementById(casillaNueva).appendChild(fichaActual);
+            movimientos--;
+            if(movimientos == 0){
+                siguienteTurno();
             }
-        } 
-    }
+        }
+    } 
+}
 
-    function moveDown(e) {
-        var casillaActual = fichaActual.parentElement.getAttribute("id");
-        var numero = Number(casillaActual.slice(7));
-        if(numero<210){
-            var numeroNuevo = numero + 15;
-            var casillaNueva = "casilla" + String(numeroNuevo);
-            if(document.getElementById(casillaNueva).getAttribute("class") == "suelo"){
-                document.getElementById(casillaNueva).appendChild(fichaActual);
-                movimientos--;
-                if(movimientos == 0){
-                    siguienteTurno();
-                }
+function moveDown(e) {
+    var casillaActual = fichaActual.parentElement.getAttribute("id");
+    var numero = Number(casillaActual.slice(7));
+    if(numero<210){
+        var numeroNuevo = numero + 15;
+        var casillaNueva = "casilla" + String(numeroNuevo);
+        if(document.getElementById(casillaNueva).getAttribute("class") == "suelo" && !casillaOcupada(document.getElementById(casillaNueva))){
+            document.getElementById(casillaNueva).appendChild(fichaActual);
+            movimientos--;
+            if(movimientos == 0){
+                siguienteTurno();
             }
         }
     }
+}
 
-    function moveLeft(e) {
-        var casillaActual = fichaActual.parentElement.getAttribute("id");
-        var numero = Number(casillaActual.slice(7));
-        if((numero) % 15 != 0){
-            var numeroNuevo = numero - 1;
-            var casillaNueva = "casilla" + String(numeroNuevo);
-            if(document.getElementById(casillaNueva).getAttribute("class") == "suelo"){
-                document.getElementById(casillaNueva).appendChild(fichaActual);
-                movimientos--;
-                if(movimientos == 0){
-                    siguienteTurno();
-                }
+function moveLeft(e) {
+    var casillaActual = fichaActual.parentElement.getAttribute("id");
+    var numero = Number(casillaActual.slice(7));
+    if((numero) % 15 != 0){
+        var numeroNuevo = numero - 1;
+        var casillaNueva = "casilla" + String(numeroNuevo);
+        if(document.getElementById(casillaNueva).getAttribute("class") == "suelo" && !casillaOcupada(document.getElementById(casillaNueva))){
+            document.getElementById(casillaNueva).appendChild(fichaActual);
+            movimientos--;
+            if(movimientos == 0){
+                siguienteTurno();
             }
         }
     }
+}
 
-    function moveRight(e) {
-        var casillaActual = fichaActual.parentElement.getAttribute("id");
-        var numero = Number(casillaActual.slice(7));
-        if((numero + 1) % 15 != 0){
-            var numeroNuevo = numero + 1;
-            var casillaNueva = "casilla" + String(numeroNuevo);
-            if(document.getElementById(casillaNueva).getAttribute("class") == "suelo"){
-                document.getElementById(casillaNueva).appendChild(fichaActual);
-                movimientos--;
-                if(movimientos == 0){
-                    siguienteTurno();
-                }
+function moveRight(e) {
+    var casillaActual = fichaActual.parentElement.getAttribute("id");
+    var numero = Number(casillaActual.slice(7));
+    if((numero + 1) % 15 != 0){
+        var numeroNuevo = numero + 1;
+        var casillaNueva = "casilla" + String(numeroNuevo);
+        if(document.getElementById(casillaNueva).getAttribute("class") == "suelo" && !casillaOcupada(document.getElementById(casillaNueva))){
+            document.getElementById(casillaNueva).appendChild(fichaActual);
+            movimientos--;
+            if(movimientos == 0){
+                siguienteTurno();
             }
         }
     }
+}
 
+function casillaOcupada(casilla){
+    if(fichaActual.getAttribute("id") =="fichaminotauro"){
+        if(casilla.childElementCount > 0){
+            eliminarFicha(casilla);
+        }
+            return false;
+        
+    } else if(casilla.childElementCount > 0){
+        return true;
+    }
+    return false;
+}
+
+function eliminarFicha(casilla){
+    sacarFicha(casilla.firstChild.getAttribute("id"));
+    casilla.firstChild.remove();
+}
+
+function sacarFicha(id){
+    var jugador = id.slice(5);
+    if(document.getElementById(jugador).childElementCount > 2){
+        document.getElementById(jugador).lastChild.remove();
+        generarFichas(jugador);
+    }else{
+        document.getElementById(jugador).innerHTML += "<p>No quedan refuerzos!</p>"
+    }
+    
+    
+
+}
 
 function tirarDado() {
     if(dado == null){
