@@ -56,7 +56,6 @@ function empezar() {
 
     document.getElementById('instruccion').innerHTML = "<p>Jugador " + turno + " tira el dado</p>";
     document.getElementById('cajaDado').addEventListener("click",tirarDado);
-
 }
 
 function guardarInformacion(){
