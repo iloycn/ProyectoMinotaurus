@@ -164,9 +164,36 @@ function actuar(turno){
 function moverMuros() {
     document.getElementById('cajaDado').style.backgroundColor = "grey";
     document.getElementById('cajaDado').innerText = "";
-    document.getElementById('instruccion').innerHTML = "<p>Jugador " + turno + " mueve un muro</p>";
-    console.log(moverMuros);
-    siguienteTurno()
+    document.getElementById('instruccion').innerHTML = "<p>Jugador " + turno + " haz click en un muro para quitarlo</p>";
+   var elementosMuro = document.getElementsByClassName('muro');
+   for (var i = 0; i < elementosMuro.length; i++) {
+        elementosMuro[i].addEventListener('click', quitarmuro); {
+
+    }
+}
+function quitarmuro(e){
+    quitarevent('muro',quitarmuro);
+    e.target.setAttribute('class','suelo');
+    var elementossuelo = document.getElementsByClassName('suelo');
+    for (var i = 0; i < elementossuelo.length; i++) {
+        if (elementossuelo[i].childElementCount == 0){
+             elementossuelo[i].addEventListener('click', aniadirmuro); }
+    }
+    document.getElementById('instruccion').innerHTML = "<p>Jugador " + turno + " haz click en un suelo para poner el muro</p>";
+}
+
+function aniadirmuro(e){
+    quitarevent('suelo', aniadirmuro);
+    e.target.setAttribute('class','muro');
+    siguienteTurno();
+}
+
+}
+function quitarevent(classe,funtion){
+    var elementosMuro = document.getElementsByClassName(classe);
+    for (var i = 0; i < elementosMuro.length; i++) {
+        elementosMuro[i].removeEventListener('click',funtion); 
+    }
 }
 
 function moverMino() {
@@ -178,13 +205,14 @@ function moverMino() {
     window.addEventListener("keydown", teclado);
 }
 
-
 function mover() {
+    //que mire si hay fichas antex de dejar mover.
     document.getElementById('instruccion').innerHTML = "<p>Jugador " + turno + " mueve tu ficha " + dado + " casillas</p>";
     fichaActual = document.getElementById('ficha' + turno);
     window.addEventListener("keydown", teclado);
 
 }
+
 
 function teclado(e) {
     if(movimientos > 0){
@@ -271,10 +299,11 @@ function moveRight(e) {
 
 function casillaOcupada(casilla){
     if(fichaActual.getAttribute("id") =="fichaminotauro"){
+        if(casilla.getAttribute("id").)
         if(casilla.childElementCount > 0){
             eliminarFicha(casilla);
         }
-            return false;
+        return false;
         
     } else if(casilla.childElementCount > 0){
         return true;
