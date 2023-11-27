@@ -22,6 +22,8 @@ var jugadores = [
     []
 ];
 
+var eliminados = [];
+
 var turno;
 
 var orden;
@@ -206,7 +208,9 @@ function moverMino() {
 }
 
 function mover() {
-    //que mire si hay fichas antex de dejar mover.
+    if(fichaActual=""){
+        tirarDado();
+    }
     document.getElementById('instruccion').innerHTML = "<p>Jugador " + turno + " mueve tu ficha " + dado + " casillas</p>";
     fichaActual = document.getElementById('ficha' + turno);
     window.addEventListener("keydown", teclado);
@@ -299,7 +303,9 @@ function moveRight(e) {
 
 function casillaOcupada(casilla){
     if(fichaActual.getAttribute("id") =="fichaminotauro"){
-        if(casilla.getAttribute("id").)
+        if(estaEn(casilla.getAttribute("id").slice(7),INICIALES)){
+            return true;
+        }
         if(casilla.childElementCount > 0){
             eliminarFicha(casilla);
         }
@@ -370,13 +376,15 @@ function abrirAjustes() {
 }
 
 
-
 function agregarFormularioHijo() {
     if (contadorFormularios < maxFormularios) {
         var formulariosHijos = document.getElementById('formulariosHijos');
 
         var formularioHijo = document.createElement('div');
         formularioHijo.className = 'formulario-hijo';
+        
+        var nuevoColor = obtenerColorUnico();
+        
         formularioHijo.innerHTML = `
           <h3>Jugador ${contadorFormularios + 1}</h3>
           <label for="nombre${contadorFormularios}">Nombre:</label>
@@ -384,10 +392,10 @@ function agregarFormularioHijo() {
 
           <label for="color${contadorFormularios}">Color:</label>
           <select id="color${contadorFormularios}" name="color${contadorFormularios}" required>
-            <option value="blanco" ${!coloresUtilizados.includes('blanco') ? '' : 'disabled'}>Blanco</option>
-            <option value="amarillo" ${!coloresUtilizados.includes('amarillo') ? '' : 'disabled'}>Amarillo</option>
-            <option value="rojo" ${!coloresUtilizados.includes('rojo') ? '' : 'disabled'}>Rojo</option>
-            <option value="azul" ${!coloresUtilizados.includes('azul') ? '' : 'disabled'}>Azul</option>
+            <option value="blanco" ${nuevoColor === 'blanco' ? '' : 'disabled'}>Blanco</option>
+            <option value="amarillo" ${nuevoColor === 'amarillo' ? '' : 'disabled'}>Amarillo</option>
+            <option value="rojo" ${nuevoColor === 'rojo' ? '' : 'disabled'}>Rojo</option>
+            <option value="azul" ${nuevoColor === 'azul' ? '' : 'disabled'}>Azul</option>
           </select>
         `;
 
@@ -398,11 +406,24 @@ function agregarFormularioHijo() {
         if (contadorFormularios >= maxFormularios) {
             document.getElementById('agregarBtn').disabled = true;
         }
-
-
     }
 }
 
+function obtenerColorUnico() {
+    // Obtener un color único que aún no se ha utilizado
+    var coloresDisponibles = ['blanco', 'amarillo', 'rojo', 'azul'];
+    var colorElegido = null;
+
+    for (var i = 0; i < coloresDisponibles.length; i++) {
+        if (!coloresUtilizados.includes(coloresDisponibles[i])) {
+            colorElegido = coloresDisponibles[i];
+            coloresUtilizados.push(colorElegido);
+            break;
+        }
+    }
+
+    return colorElegido;
+}
 
 function cambiarVolumen() {
     var volumen = document.getElementById("volumen").value;
