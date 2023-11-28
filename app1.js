@@ -40,21 +40,7 @@ var maxFormularios = 4;
 
 var coloresUtilizados = [];
 
-var intervaloTemporizador;
-
-var tiempoParseado;
-
-var reinicio = 0;
-
-
 function empezar() {
-    if (contadorFormularios < 2) {
-        alert("Debes llenar al menos dos formularios para empezar el juego.");
-        return;
-    }
-    tiempoParseado = parseInt(document.getElementById('datotiempo').textContent);
-    temporizador();
-
     generarMuros();
     generarTablero();
     guardarInformacion();
@@ -71,7 +57,7 @@ function empezar() {
     turno = orden[0];
 
     document.getElementById('instruccion').innerHTML = "<p>Jugador " + turno + " tira el dado</p>";
-    document.getElementById('cajaDado').addEventListener("click", tirarDado);
+    document.getElementById('cajaDado').addEventListener("click",tirarDado);
 }
 
 function guardarInformacion(){
@@ -180,14 +166,13 @@ function actuar(turno){
 function moverMuros() {
     document.getElementById('cajaDado').style.backgroundColor = "grey";
     document.getElementById('cajaDado').innerText = "";
-    document.getElementById('instruccion').innerHTML = "<p>Jugador " + turno + " mueve un muro</p>";
+    document.getElementById('instruccion').innerHTML = "<p>Jugador " + turno + " haz click en un muro para quitarlo</p>";
    var elementosMuro = document.getElementsByClassName('muro');
    for (var i = 0; i < elementosMuro.length; i++) {
         elementosMuro[i].addEventListener('click', quitarmuro); {
 
-    }  
+    }
 }
-
 function quitarmuro(e){
     quitarevent('muro',quitarmuro);
     e.target.setAttribute('class','suelo');
@@ -202,7 +187,7 @@ function quitarmuro(e){
 function aniadirmuro(e){
     quitarevent('suelo', aniadirmuro);
     e.target.setAttribute('class','muro');
-    siguienteTurno()
+    siguienteTurno();
 }
 
 }
@@ -328,8 +313,6 @@ function casillaOcupada(casilla){
         
     } else if(casilla.childElementCount > 0){
         return true;
-    } else if(casilla.getAttribute("id") == "casilla112"){
-        finDelJuego();
     }
     return false;
 }
@@ -376,7 +359,6 @@ function siguienteTurno() {
     }
     turno = siguiente;
     dado = null;
-    document.getElementById('datotiempo').innerHTML = 60;
     window.removeEventListener("keydown", teclado);
     document.getElementById('instruccion').innerHTML = "<p>Jugador " + turno + " tira el dado</p>";
     document.getElementById('cajaDado').addEventListener("click",tirarDado);
@@ -392,6 +374,7 @@ function abrirAjustes() {
     }
 
 }
+
 
 function agregarFormularioHijo() {
     if (contadorFormularios < maxFormularios) {
@@ -426,25 +409,8 @@ function agregarFormularioHijo() {
     }
 }
 
-function temporizador() {
-    setInterval(() => {
-        if (tiempoParseado < 0) {
-            siguienteTurno();
-            tiempoParseado=60;
-            datotiempo = 60;
-           if (reinicio == datotiempo) {
-                tiempoParseado=60;
-            }
-        }
-
-        datotiempo.textContent = tiempoParseado;
-        tiempoParseado--;
-
-    }, 1000);
-}
-
 function obtenerColorUnico() {
-
+    // Obtener un color único que aún no se ha utilizado
     var coloresDisponibles = ['blanco', 'amarillo', 'rojo', 'azul'];
     var colorElegido = null;
 
@@ -465,9 +431,7 @@ function cambiarVolumen() {
     
 }
 
-function finDelJuego(){
-    document.getElementById('instruccion').innerHTML = "ha ganado el jugador " + turno;
-    removeEventListener("keydown",teclado);
-    document.getElementById("cajaDado").removeEventListener("click",tirarDado);
+
+function finDelJuego(){//acabar funcion de fin del juego
     return true;
 }
