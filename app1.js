@@ -435,3 +435,51 @@ function cambiarVolumen() {
 function finDelJuego(){//acabar funcion de fin del juego
     return true;
 }
+
+/*trmporizador
+Para modificar el tiempo de juego en este código, puedes cambiar el valor inicial del tiempo y luego modificar el valor en función de los eventos de juego.
+ Aquí hay un ejemplo de cómo puedes hacer esto:
+
+Primero, crea una variable para almacenar el tiempo actual:
+
+var tiempoActual = 60; // Ajusta el valor inicial según lo desees
+Luego, crea una función para actualizar el tiempo en el DOM:
+
+function actualizarTiempo() {
+    document.getElementById('datotiempo').innerText = tiempoActual;
+}
+
+
+A continuación, modifica la función tirarDado para actualizar el tiempo:
+
+function tirarDado() {
+    if(dado == null){
+        dado = Math.floor(Math.random() * 6 + 1);
+        document.getElementById('cajaDado').style.backgroundColor = "white";
+        document.getElementById('cajaDado').innerText = dado;
+        movimientos = dado;
+        actuar();
+        tiempoActual = 60; // Ajusta el valor según lo desees
+        actualizarTiempo();
+    }
+}
+
+
+Por último, crea una función para disminuir el tiempo cada segundo:
+
+function reducirTiempo() {
+    tiempoActual--;
+    actualizarTiempo();
+    if (tiempoActual <= 0) {
+        // El tiempo se ha agotado, así que el juego termina aquí
+    }
+}
+Finalmente, configura un temporizador para llamar a la función reducirTiempo cada segundo:
+
+var temporizador = setInterval(reducirTiempo, 1000);
+
+
+Recuerda que debes ajustar los valores según tus necesidades y las reglas de tu juego. 
+También, debes determinar en qué momento se debe detener el temporizador y, si es necesario, agregar 
+funciones adicionales para administrar el fin del juego.
+*/
