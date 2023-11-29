@@ -100,7 +100,7 @@ function obtenerColorUnico() {
 function comprobarFormulario(){
     if (contadorFormularios < 2) {
         alert("Debes llenar al menos dos fichas de jugador para empezar el juego.")
-    } else {
+    } else  {
         empezar();
     }
 }
@@ -492,7 +492,7 @@ function finDelJuego(){
         document.getElementById('instruccion').innerHTML = "ha ganado el jugador " + turno; 
         removeEventListener("keydown",teclado);
         document.getElementById("cajaDado").removeEventListener("click",tirarDado);
-        
+
         return true;
     } else{
         return false;

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/38f6a19bdf.js" crossorigin="anonymous">//para iconos</script>
     <link rel="stylesheet" href="estilos.css">
+    <link id="dynamic-favicon" rel="shortcut icon" href="img/favicon/favicon-32x32.png">
     <script src="app.js"></script>
     <title>Minotaurus</title>
 </head>
@@ -12,11 +13,8 @@
 
     <div id="formulario">
         <h1>JUGADORES</h1>
-        <!-- Contenedor para los formularios hijos -->
         <div id="formulariosHijos"></div>
-         <!-- Botón para agregar formulario hijo -->
-        <button class="agregar-btn" onclick="agregarFormularioHijo()" id="agregarBtn">Agregar Formulario</button>
-        <!-- Botón para empezar la partida -->
+        <button class="agregar-btn" onclick="agregarFormularioHijo()" id="agregarBtn">Añadir Jugador</button>
         <button id="empezarBtn" onclick="comprobarFormulario()">Empezar</button>
         <audio id="audioElement">
             <source src="audio/empezar.mp3" type="audio/mpeg">
