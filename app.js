@@ -56,9 +56,7 @@ function agregarFormularioHijo() {
 
         var formularioHijo = document.createElement('div');
         formularioHijo.className = 'formulario-hijo';
-        
-        var nuevoColor = obtenerColorUnico();
-        
+                
         formularioHijo.innerHTML = `
           <h3>Jugador ${contadorFormularios + 1}</h3>
           <label for="nombre${contadorFormularios}">Nombre:</label>
@@ -66,10 +64,10 @@ function agregarFormularioHijo() {
 
           <label for="color${contadorFormularios}">Color:</label>
           <select id="color${contadorFormularios}" name="color${contadorFormularios}" required>
-            <option value="blanco" ${nuevoColor === 'blanco' ? '' : 'disabled'}>Blanco</option>
-            <option value="amarillo" ${nuevoColor === 'amarillo' ? '' : 'disabled'}>Amarillo</option>
-            <option value="rojo" ${nuevoColor === 'rojo' ? '' : 'disabled'}>Rojo</option>
-            <option value="azul" ${nuevoColor === 'azul' ? '' : 'disabled'}>Azul</option>
+            <option value="blanco">Blanco</option>
+            <option value="amarillo" >Amarillo</option>
+            <option value="rojo">Rojo</option>
+            <option value="azul">Azul</option>
           </select>`;
 
         formulariosHijos.appendChild(formularioHijo);
@@ -81,28 +79,38 @@ function agregarFormularioHijo() {
     }
 }
 
-function obtenerColorUnico() {
-
-    var coloresDisponibles = ['blanco', 'amarillo', 'rojo', 'azul'];
-    var colorElegido = null;
-
-    for (var i = 0; i < coloresDisponibles.length; i++) {
-        if (!coloresUtilizados.includes(coloresDisponibles[i])) {
-            colorElegido = coloresDisponibles[i];
-            coloresUtilizados.push(colorElegido);
-            break;
-        }
-    }
-
-    return colorElegido;
-}
-
 function comprobarFormulario(){
     if (contadorFormularios < 2) {
         alert("Debes llenar al menos dos fichas de jugador para empezar el juego.")
-    } else  {
+    } else if(coloresRepetidos()) {
+        alert("No puedes repetir colores.")
+    } else if(nombresBlancos()) {
+        alert("Cada jugador Tiene que tener un nombre.")
+    } else {
         empezar();
     }
+}
+
+function coloresRepetidos(){
+    for(var i = 0; i < contadorFormularios ; i++){
+        var color = document.getElementById("color" + String(i)).value;
+        for(var j = 0; j < contadorFormularios; j++){
+            if(color = document.getElementById("color" + j).value == color && i != j){
+                return true;
+            }
+        }
+
+    }
+    return false;
+}
+
+function nombresBlancos(){
+    for(var i = 0; i < contadorFormularios ; i++){
+       if(document.getElementById("nombre" + String(i)).value == ""){
+        return true;
+       }
+    }
+    return false;
 }
 
 function empezar() {
@@ -212,6 +220,7 @@ function empezarAudioFondo(){
 }
 
 function empezarTemporizador(){
+    document.getElementById("temporizador").style.display = "block";
     temporizador = setInterval(reducirTiempo, 1000);
     tiempoActual = 60; 
     actualizarTiempo();
@@ -406,15 +415,11 @@ function casillaOcupada(casilla){
             eliminarFicha(casilla);
         }
         return false;
-        
     } else if(casilla.childElementCount > 0){
         return true;
-        finDelJuego
     } else if(casilla.getAttribute("id") == "casilla112"){
         finDelJuego();
     }
-    
-
     return false;
 }
 
@@ -492,7 +497,8 @@ function finDelJuego(){
         document.getElementById('instruccion').innerHTML = "ha ganado el jugador " + turno; 
         removeEventListener("keydown",teclado);
         document.getElementById("cajaDado").removeEventListener("click",tirarDado);
-
+        document.getElementById("temporizador").style.display = "none";
+        document.getElementById("cajaFinal").style.display = "block";
         return true;
     } else{
         return false;

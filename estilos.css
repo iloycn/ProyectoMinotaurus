@@ -77,7 +77,6 @@
     background-color: #ccc;
   }
 
-  /* Estilo del botón de empezar */
   #empezarBtn {
     background-color: #3498db;
     color: #fff;
@@ -164,6 +163,7 @@
     border: 5px double green;
     padding: 20px;
     box-sizing: border-box; 
+    z-index: 100;
 }
 
 
@@ -333,7 +333,7 @@ img {
 
 #cajaDado{
     position: absolute;
-    top: 550px;
+    top: 500px;
     left: 30px;
     width: 80px;
     height: 80px;
@@ -346,7 +346,21 @@ img {
 
 #instruccion{
     position: absolute;
-    top: 550px;
+    top: 500px;
     right: 30px;
 }
 
+#cajaFinal{
+    display: none;
+    height: 600px;
+    width: 100px;
+    position: absolute;
+    top: 9%;
+    left: 10%;
+    background-color: green;
+}
+
+#tituloVictoria{
+    color: #2ecc71;
+    font-size: 20px;
+}
