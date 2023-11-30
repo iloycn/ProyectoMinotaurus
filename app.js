@@ -48,6 +48,8 @@ var contadorFormularios = 0;
 
 var maxFormularios = 4;
 
+var ganador;
+
 
 
 function agregarFormularioHijo() {
@@ -431,7 +433,7 @@ function casillaOcupada(casilla){
 
 function eliminarFicha(casilla){
     sacarFicha(casilla.firstChild.getAttribute("id"));
-    comprobarEliminado(casilla.firstChild.getAttribute("id"));
+    comprobarEliminado(casilla.firstChild.getAttribute("id").slice(5));
     casilla.firstChild.remove();
     comidas = document.getElementById("comidas" + turno).innerText[15];
     document.getElementById("comidas" + turno ).innerText="Fichas comidas:" + String(Number(comidas)+1);
@@ -440,6 +442,9 @@ function eliminarFicha(casilla){
 function comprobarEliminado(color){
     if(document.getElementById(color).childElementCount < 4){
         eliminados.push(color.slice(5));
+        if(eliminados.length == contadorFormularios){
+            finEmpate();
+        }
     }
 }
 
@@ -533,4 +538,21 @@ function finDelJuego(){
     document.getElementById("cajaDado").removeEventListener("click",tirarDado);
     document.getElementById("temporizador").style.display = "none";
     document.getElementById("cajaFinal").style.display = "block";
+    document.getElementById("tituloVictoria").innerText += " JUGADOR " + turno;
+    guardarPartida();
 }
+
+function finEmpate(){
+    document.getElementById('instruccion').innerHTML = "EMPATE"; 
+    removeEventListener("keydown",teclado);
+    document.getElementById("cajaDado").removeEventListener("click",tirarDado);
+    document.getElementById("temporizador").style.display = "none";
+    document.getElementById("cajaFinal").style.display = "block";
+    document.getElementById("tituloVictoria").innerText = "EMPATE";
+    guardarPartida();
+}
+
+function guardarPartida(){
+    
+}
+
