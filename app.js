@@ -133,10 +133,10 @@ function guardarInformacion(){
     turno = orden[0];
 }
 
-function estaEn(numero, array) {
+function estaEn(buscado, array) {
     for (let i = 0; i < array.length; i++) {
         const element = array[i];
-        if (numero == element) {
+        if (buscado == element) {
             return true;
         }
     }
@@ -184,6 +184,8 @@ function aniadirJugadores() {
 
 function generarTargeta(nombre, color) {
     document.getElementById('nombre' + color).innerText = nombre;
+    document.getElementById(color).innerHTML += '<p id="salvadas' + color + '">Fichas salvadas:0</p>';
+    document.getElementById(color).innerHTML += '<p id="comidas' + color + '">Fichas comidas:0</p>';
     document.getElementById(color).innerHTML += '<img src="img/ficha' + color + '.jpg">';
     document.getElementById(color).innerHTML += '<img src="img/ficha' + color + '.jpg">';
 }
@@ -216,7 +218,6 @@ function quitarFormulario(){
 
 function empezarAudioFondo(){
     document.getElementById('audioElement').play();
-    console.log(document.getElementById('audioElement'));
 }
 
 function empezarTemporizador(){
@@ -313,15 +314,10 @@ function moverMino() {
 }
 
 function mover() {
-    if(estaEn(turno,eliminados)){
-        tirarDado();
-    }
     document.getElementById('instruccion').innerHTML = "<p>Jugador " + turno + " mueve tu ficha " + dado + " casillas</p>";
     fichaActual = document.getElementById('ficha' + turno);
     window.addEventListener("keydown", teclado);
-
 }
-
 
 function teclado(e) {
     if(movimientos > 0){
@@ -351,6 +347,9 @@ function moveUp(e) {
         if(document.getElementById(casillaNueva).getAttribute("class") == "suelo" && !casillaOcupada(document.getElementById(casillaNueva))){
             document.getElementById(casillaNueva).appendChild(fichaActual);
             movimientos--;
+            if(document.getElementById(casillaNueva).getAttribute("id") == "casilla112"){
+                fichaFinal(document.getElementById(casillaNueva));
+            }
             if(movimientos == 0){
                 siguienteTurno()
             }
@@ -367,6 +366,9 @@ function moveDown(e) {
         if(document.getElementById(casillaNueva).getAttribute("class") == "suelo" && !casillaOcupada(document.getElementById(casillaNueva))){
             document.getElementById(casillaNueva).appendChild(fichaActual);
             movimientos--;
+            if(document.getElementById(casillaNueva).getAttribute("id") == "casilla112"){
+                fichaFinal(document.getElementById(casillaNueva));
+            }
             if(movimientos == 0){
                 siguienteTurno()
             }
@@ -383,6 +385,9 @@ function moveLeft(e) {
         if(document.getElementById(casillaNueva).getAttribute("class") == "suelo" && !casillaOcupada(document.getElementById(casillaNueva))){
             document.getElementById(casillaNueva).appendChild(fichaActual);
             movimientos--;
+            if(document.getElementById(casillaNueva).getAttribute("id") == "casilla112"){
+                fichaFinal(document.getElementById(casillaNueva));
+            }
             if(movimientos == 0){
                 siguienteTurno()
             }
@@ -399,6 +404,9 @@ function moveRight(e) {
         if(document.getElementById(casillaNueva).getAttribute("class") == "suelo" && !casillaOcupada(document.getElementById(casillaNueva))){
             document.getElementById(casillaNueva).appendChild(fichaActual);
             movimientos--;
+            if(document.getElementById(casillaNueva).getAttribute("id") == "casilla112"){
+                fichaFinal(document.getElementById(casillaNueva));
+            }
             if(movimientos == 0){
                 siguienteTurno()
             }
@@ -417,22 +425,32 @@ function casillaOcupada(casilla){
         return false;
     } else if(casilla.childElementCount > 0){
         return true;
-    } else if(casilla.getAttribute("id") == "casilla112"){
-        finDelJuego();
     }
     return false;
 }
 
 function eliminarFicha(casilla){
     sacarFicha(casilla.firstChild.getAttribute("id"));
+    comprobarEliminado(casilla.firstChild.getAttribute("id"));
     casilla.firstChild.remove();
+    comidas = document.getElementById("comidas" + turno).innerText[15];
+    document.getElementById("comidas" + turno ).innerText="Fichas comidas:" + String(Number(comidas)+1);
+    
+}
+function comprobarEliminado(color){
+    if(document.getElementById(color).childElementCount < 4){
+        eliminados.push(color.slice(5));
+    }
 }
 
 function sacarFicha(id){
     var jugador = id.slice(5);
-    if(document.getElementById(jugador).childElementCount > 2){
+    if(document.getElementById(jugador).childElementCount > 4){
         document.getElementById(jugador).lastChild.remove();
         generarFichas(jugador);
+        if(fichaActual == null){
+            fichaActual = document.getElementById('ficha' + turno);
+        }
     }else{
         document.getElementById(jugador).innerHTML += "<p>No quedan refuerzos!</p>"
     }
@@ -440,7 +458,11 @@ function sacarFicha(id){
 
 function tirarDado() {
     if(dado == null){
-        dado = Math.floor(Math.random() * 6 + 1);
+        if(estaEn(turno,eliminados)){
+            dado = Math.floor(Math.random() * 2) + 5;
+        }else{
+            dado = Math.floor(Math.random() * 6 + 1);
+        }
         document.getElementById('cajaDado').style.backgroundColor = "white";
         document.getElementById('cajaDado').innerText = dado;
         movimientos = dado;
@@ -491,20 +513,24 @@ function cambiarVolumen() {
 }
 
 //finalizacion de partida
-
-function finDelJuego(){
-    if(comprobarFin()){
-        document.getElementById('instruccion').innerHTML = "ha ganado el jugador " + turno; 
-        removeEventListener("keydown",teclado);
-        document.getElementById("cajaDado").removeEventListener("click",tirarDado);
-        document.getElementById("temporizador").style.display = "none";
-        document.getElementById("cajaFinal").style.display = "block";
-        return true;
-    } else{
-        return false;
+function fichaFinal(casilla){
+    salvadas = document.getElementById("salvadas" + turno).innerText[16];
+    document.getElementById("salvadas" + turno ).innerText="Fichas salvadas:" + String(Number(salvadas)+1);
+    if(Number(document.getElementById("salvadas" + turno).innerText[16]) != 2){//numero de fichas para ganar
+        casilla.firstChild.remove();
+        sacarFicha(fichaActual.getAttribute("id"));
+        siguienteTurno();
+    }else{
+        casilla.firstChild.remove();
+        finDelJuego();
     }
+    
 }
 
-function comprobarFin(){
-    return true;
+function finDelJuego(){
+    document.getElementById('instruccion').innerHTML = "ha ganado el jugador " + turno; 
+    removeEventListener("keydown",teclado);
+    document.getElementById("cajaDado").removeEventListener("click",tirarDado);
+    document.getElementById("temporizador").style.display = "none";
+    document.getElementById("cajaFinal").style.display = "block";
 }
