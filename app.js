@@ -441,8 +441,8 @@ function eliminarFicha(casilla){
     
 }
 function comprobarEliminado(color){
-    if(document.getElementById(color).childElementCount < 4){
-        eliminados.push(color.slice(5));
+    if(document.getElementById(color).lastElementChild.innerText == "No quedan refuerzos!"){
+        eliminados.push(color);
         if(eliminados.length == contadorFormularios){
             finEmpate();
         }
@@ -466,7 +466,7 @@ function tirarDado() {
     if(dado == null){
         if(estaEn(turno,eliminados)){
             dado = Math.floor(Math.random() * 2) + 5;
-        }else{
+         }else{
             dado = Math.floor(Math.random() * 6 + 1);
         }
         document.getElementById('cajaDado').style.backgroundColor = "white";
@@ -554,6 +554,19 @@ function finEmpate(){
 }
 
 function guardarPartida(){
-
+    if (typeof(Storage) !== "undefined") {
+        var fecha = new Date();
+        datos.push()
+        var datosJugadores = [];
+        for (var i = 0; i < jugadores[0].length; i++){
+            datosJugadores[i].push(jugadores[0][i]);
+            datosJugadores[i].push(jugadores[1][i]);
+            datosJugadores[i].push(document.getElementById(String(jugadores[0][i])).children[2]);
+            datosJugadores[i].push(document.getElementById(String(jugadores[0][i])).children[3]);
+        }
+        var fechaString = String(fecha.getDate()) + "/" + String(fecha.getDateMonth()+1) + "/" + String(fecha.getFullYear()) + "/" 
+            + String(date.getHours()) + ":" + String(date.getMinutes()) + ":" + String(date.getSeconds());
+        localStorage.setItem(fechaString, JSON.stringify(datosJugadores));
+    }
 }
 
