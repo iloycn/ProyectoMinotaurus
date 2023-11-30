@@ -245,6 +245,7 @@ function reducirTiempo() {
 function comenzarPartida(){
     document.getElementById('instruccion').innerHTML = "<p>Jugador " + turno + " tira el dado</p>"; 
     document.getElementById('cajaDado').addEventListener("click", tirarDado);
+    document.getElementById("pasoTurno").addEventListener("click",siguienteTurno);
     actuar();
 }
 
@@ -553,6 +554,6 @@ function finEmpate(){
 }
 
 function guardarPartida(){
-    
+
 }
 

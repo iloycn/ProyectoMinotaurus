@@ -1,9 +1,13 @@
+body{
+    background-image: url(/img/fondo.jpg);
+}
 
-  #formulario {
-    background-color: #fff;
+#formulario {
+    background-image: url(/img/fondo.jpg);
     border-radius: 8px;
     padding: 30px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+    border: 2px dotted black;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -13,80 +17,98 @@
     right: 20%;
     bottom: 20%;
     z-index: 1;
-  }
+}
 
-  #formulariosHijos {
+#formulario h1{
+    color: gold;
+    font-weight: bold;
+    font-family:fantasy;
+    -webkit-text-stroke-width:1px;
+    -webkit-text-stroke-color: black;
+    margin-bottom: 40px;
+}
+
+#formulariosHijos {
     display: flex;
     flex-direction: row;
     gap: 20px;
     justify-content: space-around;
-  }
+}
 
-  .formulario-hijo {
-    background-color: #f9f9f9;
+.formulario-hijo {
+    background-color: lightgreen;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 20px;
     width: 180px;
-  }
+    border: 2px solid black;
 
-  h1 {
-    text-align: center;
-    color: #3498db;
-    margin-bottom: 20px;
-  }
+}
 
-  label {
+.formulario-hijo h3 {
+    color: gold;
+    font-weight: bold;
+    font-family:fantasy;
+    font-size: x-large;
+    -webkit-text-stroke-width:1px;
+    -webkit-text-stroke-color: black;
+}
+
+label {
     display: block;
     margin-bottom: 8px;
-    color: #555;
-  }
+    color: black;
+}
 
-  input,
-  select {
+input,
+select {
     width: 100%;
     padding: 8px;
     margin-bottom: 16px;
     box-sizing: border-box;
-    border: 1px solid #ccc;
+    border: 1px solid black;
     border-radius: 4px;
-  }
+}
 
-  select {
+select {
     appearance: none;
-  }
+}
 
-  .agregar-btn {
-    background-color: #2ecc71;
-    color: #fff;
+.agregar-btn {
+    background-color: gold;
+    color: black;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
     margin-top: 10px;
-  }
+}
 
-  .agregar-btn:disabled {
+.agregar-btn:disabled {
     background-color: #ccc;
     cursor: not-allowed;
-  }
+}
 
-  .agregar-btn:hover:disabled {
+.agregar-btn:hover{
     background-color: #ccc;
-  }
+}
 
-  #empezarBtn {
-    background-color: #3498db;
-    color: #fff;
+#empezarBtn {
+    background-color: gold;
+    color: black;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
     margin-top: 10px;
-  }
+}
+
+#empezarBtn:hover{
+    background-color: #ccc;
+}
 
 #titulo{
     color: gold;
@@ -106,7 +128,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    opacity: 0.3;
+    opacity: 0;
 }
 
 #tablero{
@@ -121,6 +143,7 @@
     border: 15px double green;
     flex-wrap: wrap;
     border-radius: 3px;
+    margin-bottom: 20px;
 }
 
 #temporizador{
@@ -132,8 +155,11 @@
     position: absolute;
     top: 25px;
     left: 20px;
-    padding: 10px;
+    padding: 10px 10px;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+#temporizador p{
+    margin: 0px;
 }
 
 #btnAjustes{
@@ -238,7 +264,7 @@
 }
 
 .muro{
-    background-color: lightgray;
+background-color: lightslategray;
     width: 50px;
     height: 50px;
     border: 1.5px solid gray;
@@ -333,8 +359,8 @@ img {
 
 #cajaDado{
     position: absolute;
-    top: 500px;
-    left: 30px;
+    top: 450px;
+    left: 120px;
     width: 80px;
     height: 80px;
     background-color: white;
@@ -344,10 +370,33 @@ img {
     border-radius: 5px;
 }
 
+#pasoTurno{
+    position: absolute;
+    top: 450px;
+    left: 30px;
+    width: 80px;
+    height: 80px;
+    background-color: white;
+    border: 5px solid black;
+    color: black;
+    font-size: medium;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
 #instruccion{
     position: absolute;
-    top: 500px;
+    top: 450px;
     right: 30px;
+    margin: 5px;
+    padding: 10px;
+    display: flex;
+    background-color: #2ecc71;
+    align-items: center;
+    border: 5px solid black;
+    border-radius: 5px;
+
+
 }
 
 #cajaFinal{
@@ -363,4 +412,79 @@ img {
 #tituloVictoria{
     color: #2ecc71;
     font-size: 20px;
+}
+
+@media (max-width: 1450px) {
+
+    #mesa{
+        display: grid;
+        justify-items: center;
+        grid-template-areas:'c1 c1 c2 c2'
+                            'dado paso instruc instruc'
+                            'tab tab tab tab'
+    }
+    
+    .contenedor{
+        flex-direction: row;
+        width: 100%;
+
+    }
+
+    .tarjeta {
+        padding: 5px 0px;
+    }
+
+    .tarjeta p{
+        margin: 5px 0px;
+    }
+    
+    .tarjeta img{
+        height: 40px;
+        width: 40px;
+        border-radius: 50px;
+    }
+
+    #contenedor1{
+        grid-area: c1;
+        align-items: flex-start;
+
+    }
+    
+    #contenedor2{
+        grid-area: c2;
+        align-items: flex-end;
+    }
+
+    #tablero{
+        grid-area: tab;
+    }
+
+    #temporizador{
+        float: left;
+        background-color: gold;
+        font-size: 2em;
+    }
+
+    #cajaDado{
+        position:static;
+        width: 80px;
+        height: 80px;
+        grid-area: dado;
+        margin-bottom: 10px;
+    }
+
+    
+    #pasoTurno{
+        position:static;
+        width: 80px;
+        height: 80px;
+        grid-area: paso;
+        margin-bottom: 10px;
+
+    }
+    
+    #instruccion{
+        position: static;
+        grid-area: instruc;
+    }
 }
