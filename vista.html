@@ -16,9 +16,6 @@
         <div id="formulariosHijos"></div>
         <button class="agregar-btn" onclick="agregarFormularioHijo()" id="agregarBtn">Añadir Jugador</button>
         <button id="empezarBtn" onclick="comprobarFormulario()">Empezar</button>
-        <audio id="audioElement">
-            <source src="audio/empezar.mp3" type="audio/mpeg">
-        </audio>
     </div>
 
     <div id="cabezera">
@@ -29,12 +26,12 @@
         <div id="temporizador"><p id="datotiempo">60</p></div>
         <div class="contenedor" id="contenedor1">
             <div id="rojo" class="tarjeta">
-                <img src="img/r2.jpg">
+                <img src="img/imgrojo.jpg">
                 <p id="nombrerojo"></p>
             </div>
 
             <div id="blanco" class="tarjeta">
-                <img src="img/b2.jpg">
+                <img src="img/imgblanco.jpg">
                 <p id="nombreblanco"></p>
             </div>
         </div>
@@ -43,12 +40,12 @@
 
         <div class="contenedor" id="contenedor2">
             <div id="azul" class="tarjeta">
-                <img src="img/a1.jpg">
+                <img src="img/imgazul.jpg">
                 <p id="nombreazul"></p>
             </div>
             
             <div id="amarillo" class="tarjeta">
-                <img src="img/y3.jpg">
+                <img src="img/imgamarillo.jpg">
                 <p id="nombreamarillo"></p>
             </div>
         </div>
@@ -71,6 +68,20 @@
     <div id="cajaFinal">
         <p id="tituloVictoria">HAS GANADO</p>
         <button id="restart">Volver a Jugar</button>
+    </div>
+    <div>
+        <audio id="fondo" loop="true">
+            <source src="audio/empezar.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="sonidoMover">
+            <source src="audio/sonidoMover.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="sonidoQuitarMuro">
+            <source src="audio/sonidoQuitarMuro.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="sonidoMinotauro">
+            <source src="audio/sonidoMinotauro.mp3" type="audio/mpeg">
+        </audio>
     </div>
 </body>
 </html>

@@ -1,9 +1,4 @@
-
-var contadorFormularios = 0;
-
-var maxFormularios = 4;
-
-var coloresUtilizados = [];
+const maxFormularios = 4;
 
 const PAREDES = [33, 35, 36, 37, 38, 39, 41, 47, 48, 56, 57, 77, 80, 81, 83, 84, 87, 92, 95, 99, 102, 107, 117, 122, 125, 129, 132, 137, 140, 141, 143, 144, 147, 167, 168, 176, 177, 183, 185, 186, 187, 188, 189, 191];
 
@@ -15,9 +10,13 @@ const INICIALblanco = [210];
 
 const INICIALamarillo = [224];
 
-var INICIALmino = [112];
+const INICIALmino = [112];
 
 const INICIALES = INICIALmino.concat(INICIALrojo, INICIALazul, INICIALblanco, INICIALamarillo);
+
+var contadorFormularios = 0;
+
+var coloresUtilizados = [];
 
 var muros = [230, 231];
 
@@ -43,10 +42,6 @@ var eliminados = [];
 var fichaActual;
 
 var movimientos;
-
-var contadorFormularios = 0;
-
-var maxFormularios = 4;
 
 var ganador;
 
@@ -121,7 +116,7 @@ function empezar() {
     generarTablero();
     aniadirJugadores();
     quitarFormulario();
-    empezarAudioFondo();
+    reproducirSonidoFondo();
     empezarTemporizador();
     comenzarPartida();
 }
@@ -218,9 +213,6 @@ function quitarFormulario(){
     document.getElementById('formulario').style.display = 'none';
 }
 
-function empezarAudioFondo(){
-    document.getElementById('audioElement').play();
-}
 
 function empezarTemporizador(){
     document.getElementById("temporizador").style.display = "block";
@@ -284,6 +276,7 @@ function moverMuros() {
 
 function quitarmuro(e){
     quitarevent('muro',quitarmuro);
+    reproducirSonidoMuro();
     e.target.setAttribute('class','suelo');
     var elementossuelo = document.getElementsByClassName('suelo');
     for (var i = 0; i < elementossuelo.length; i++) {
@@ -295,6 +288,7 @@ function quitarmuro(e){
 
 function aniadirmuro(e){
     quitarevent('suelo', aniadirmuro);
+    reproducirSonidoMuro();
     e.target.setAttribute('class','muro');
     siguienteTurno()
 }
@@ -341,7 +335,7 @@ function teclado(e) {
     }
 }
 
-function moveUp(e) {
+function moveUp() {
     var casillaActual = fichaActual.parentElement.getAttribute("id");
     var numero = Number(casillaActual.slice(7));
     if(numero>14){
@@ -349,6 +343,8 @@ function moveUp(e) {
         var casillaNueva = "casilla" + String(numeroNuevo);
         if(document.getElementById(casillaNueva).getAttribute("class") == "suelo" && !casillaOcupada(document.getElementById(casillaNueva))){
             document.getElementById(casillaNueva).appendChild(fichaActual);
+            reproducirSonidoMovimiento();
+            moverFichaConAnimacion();
             movimientos--;
             if(document.getElementById(casillaNueva).getAttribute("id") == "casilla112"){
                 fichaFinal(document.getElementById(casillaNueva));
@@ -360,7 +356,7 @@ function moveUp(e) {
     } 
 }
 
-function moveDown(e) {
+function moveDown() {
     var casillaActual = fichaActual.parentElement.getAttribute("id");
     var numero = Number(casillaActual.slice(7));
     if(numero<210){
@@ -368,6 +364,8 @@ function moveDown(e) {
         var casillaNueva = "casilla" + String(numeroNuevo);
         if(document.getElementById(casillaNueva).getAttribute("class") == "suelo" && !casillaOcupada(document.getElementById(casillaNueva))){
             document.getElementById(casillaNueva).appendChild(fichaActual);
+            reproducirSonidoMovimiento();
+            moverFichaConAnimacion();
             movimientos--;
             if(document.getElementById(casillaNueva).getAttribute("id") == "casilla112"){
                 fichaFinal(document.getElementById(casillaNueva));
@@ -379,7 +377,7 @@ function moveDown(e) {
     }
 }
 
-function moveLeft(e) {
+function moveLeft() {
     var casillaActual = fichaActual.parentElement.getAttribute("id");
     var numero = Number(casillaActual.slice(7));
     if((numero) % 15 != 0){
@@ -387,6 +385,8 @@ function moveLeft(e) {
         var casillaNueva = "casilla" + String(numeroNuevo);
         if(document.getElementById(casillaNueva).getAttribute("class") == "suelo" && !casillaOcupada(document.getElementById(casillaNueva))){
             document.getElementById(casillaNueva).appendChild(fichaActual);
+            reproducirSonidoMovimiento();
+            moverFichaConAnimacion();
             movimientos--;
             if(document.getElementById(casillaNueva).getAttribute("id") == "casilla112"){
                 fichaFinal(document.getElementById(casillaNueva));
@@ -398,7 +398,7 @@ function moveLeft(e) {
     }
 }
 
-function moveRight(e) {
+function moveRight() {
     var casillaActual = fichaActual.parentElement.getAttribute("id");
     var numero = Number(casillaActual.slice(7));
     if((numero + 1) % 15 != 0){
@@ -406,6 +406,8 @@ function moveRight(e) {
         var casillaNueva = "casilla" + String(numeroNuevo);
         if(document.getElementById(casillaNueva).getAttribute("class") == "suelo" && !casillaOcupada(document.getElementById(casillaNueva))){
             document.getElementById(casillaNueva).appendChild(fichaActual);
+            reproducirSonidoMovimiento();
+            moverFichaConAnimacion();
             movimientos--;
             if(document.getElementById(casillaNueva).getAttribute("id") == "casilla112"){
                 fichaFinal(document.getElementById(casillaNueva));
@@ -423,6 +425,7 @@ function casillaOcupada(casilla){
             return true;
         }
         if(casilla.childElementCount > 0){
+            reproducirSonidoMinotauro();
             eliminarFicha(casilla);
         }
         return false;
@@ -434,12 +437,13 @@ function casillaOcupada(casilla){
 
 function eliminarFicha(casilla){
     sacarFicha(casilla.firstChild.getAttribute("id"));
+    moverFichaConAnimacion();
     comprobarEliminado(casilla.firstChild.getAttribute("id").slice(5));
     casilla.firstChild.remove();
     comidas = document.getElementById("comidas" + turno).innerText[15];
     document.getElementById("comidas" + turno ).innerText="Fichas comidas:" + String(Number(comidas)+1);
-    
 }
+
 function comprobarEliminado(color){
     if(document.getElementById(color).lastElementChild.innerText == "No quedan refuerzos!"){
         eliminados.push(color);
@@ -469,6 +473,7 @@ function tirarDado() {
          }else{
             dado = Math.floor(Math.random() * 6 + 1);
         }
+        girarDadoConAnimacion();
         document.getElementById('cajaDado').style.backgroundColor = "white";
         document.getElementById('cajaDado').innerText = dado;
         movimientos = dado;
@@ -509,7 +514,11 @@ function abrirAjustes() {
         document.getElementById('menuAjustes').style.display = 'none';
         document.getElementById('mesa').style.opacity = '1';
     }
+    cargarDatos();
+}
 
+function cargarDatos(){
+    
 }
 
 function cambiarVolumen() {
@@ -539,7 +548,7 @@ function finDelJuego(){
     document.getElementById("cajaDado").removeEventListener("click",tirarDado);
     document.getElementById("temporizador").style.display = "none";
     document.getElementById("cajaFinal").style.display = "block";
-    document.getElementById("tituloVictoria").innerText += " JUGADOR " + turno;
+    document.getElementById("tituloVictoria").innerText += " JUGADOR " + turno.toUpperCase();
     guardarPartida();
 }
 
@@ -556,17 +565,80 @@ function finEmpate(){
 function guardarPartida(){
     if (typeof(Storage) !== "undefined") {
         var fecha = new Date();
-        datos.push()
         var datosJugadores = [];
         for (var i = 0; i < jugadores[0].length; i++){
-            datosJugadores[i].push(jugadores[0][i]);
-            datosJugadores[i].push(jugadores[1][i]);
-            datosJugadores[i].push(document.getElementById(String(jugadores[0][i])).children[2]);
-            datosJugadores[i].push(document.getElementById(String(jugadores[0][i])).children[3]);
+            var jugadorguardando = [];
+            jugadorguardando.push(jugadores[0][i]);
+            jugadorguardando.push(jugadores[1][i]);
+            jugadorguardando.push(document.getElementById(String(jugadores[1][i])).children[2]);
+            jugadorguardando.push(document.getElementById(String(jugadores[1][i])).children[3]);
+            datosJugadores.push(jugadorguardando);
         }
-        var fechaString = String(fecha.getDate()) + "/" + String(fecha.getDateMonth()+1) + "/" + String(fecha.getFullYear()) + "/" 
-            + String(date.getHours()) + ":" + String(date.getMinutes()) + ":" + String(date.getSeconds());
+        var fechaString = String(fecha.getDate()) + "/" + String(fecha.getMonth()+1) + "/" + String(fecha.getFullYear()) + "/" 
+            + String(fecha.getHours()) + ":" + String(fecha.getMinutes()) + ":" + String(fecha.getSeconds());
         localStorage.setItem(fechaString, JSON.stringify(datosJugadores));
     }
+    document.getElementById("restart").addEventListener("click",reiniciarPartida);
 }
 
+function reiniciarPartida(){
+    contadorFormularios = 0;
+    coloresUtilizados = [];
+    muros = [230, 231];
+    cantidadMuros = 8;
+    jugadores = [
+        [],
+        []
+    ];
+    tiempoActual = 60;
+    temporizador = null;
+    turno =null;
+    orden = [];
+    dado = null;
+    eliminados = [];
+    fichaActual = null;
+    movimientos = null;
+
+    document.getElementById('cajaFinal').style.opacity = "0";
+    document.getElementById('formulariosHijos').innerHTML = "";
+    document.getElementById('mesa').style.opacity = "0";
+    document.getElementById('formulario').style.display = 'block';
+    for(var i = 0; i < coloresUtilizados.length; i++){
+        document.getElementById(String(coloresUtilizados[i])).innerHTML = '<img src="img/img' + coloresUtilizados[i] + '.jpg"><p id="nombre' + coloresUtilizados[i] + '"></p>';
+    }
+    document.getElementById('tablero').innerHTML = '';
+}
+
+//sonidos
+function reproducirSonidoFondo() {
+    var sonidoBoton = document.getElementById('fondo');
+    sonidoBoton.play();
+}
+
+function reproducirSonidoMovimiento() {
+    var sonidoMovimiento = document.getElementById('sonidoMover');
+    sonidoMovimiento.play();
+}
+
+function reproducirSonidoMuro() {
+    var sonidoQuitarMuro = document.getElementById('sonidoQuitarMuro');
+    sonidoQuitarMuro.play();
+}
+
+function reproducirSonidoMinotauro() {
+    var sonidoMinotauro = document.getElementById('sonidoMinotauro');
+    sonidoMinotauro.play();
+}
+
+//animaciones 
+function moverFichaConAnimacion() {
+    fichaActual.classList.add('movimientoficha');
+}
+
+function girarDadoConAnimacion() {
+    const cajaDado = document.getElementById('cajaDado');
+    cajaDado.classList.add('girarDado');
+    setTimeout(() => {
+        cajaDado.classList.remove('girarDado');
+    }, 500);
+}
