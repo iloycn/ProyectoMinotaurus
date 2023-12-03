@@ -3,7 +3,7 @@ body{
 }
 
 #formulario {
-    background-image: url(img/fondo.jpg);
+    background-image: url(img/coliseo\ en\ pixel\ art.jpeg);
     border-radius: 8px;
     padding: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 1);
@@ -20,7 +20,7 @@ body{
 }
 
 #formulario h1{
-    color: gold;
+    color: rgb(253, 253, 253);
     font-weight: bold;
     font-family:fantasy;
     -webkit-text-stroke-width:1px;
@@ -36,7 +36,8 @@ body{
 }
 
 .formulario-hijo {
-    background-color: lightgreen;
+    background-image:url(img/fondoformulario.png);
+    background-size: 230px ;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     padding: 20px;
@@ -46,8 +47,16 @@ body{
 
 }
 
+.formulario-hijo label{
+    width: 97%;
+    background-color: white;
+    margin-bottom: 0px;
+    padding-left: 5px;
+    border-radius: 3px;
+}
+
 .formulario-hijo h3 {
-    color: gold;
+    color: rgb(249, 249, 249);
     font-weight: bold;
     font-family:fantasy;
     font-size: x-large;
@@ -78,6 +87,8 @@ select {
 .agregar-btn {
     background-color: gold;
     color: black;
+    font-family: Georgia, serif;
+    font-weight:  bolder;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
@@ -98,6 +109,8 @@ select {
 #empezarBtn {
     background-color: gold;
     color: black;
+    font-family: Georgia, serif;
+    font-weight:  bolder;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;

@@ -45,8 +45,6 @@ var movimientos;
 
 var ganador;
 
-
-
 function agregarFormularioHijo() {
     if (contadorFormularios < maxFormularios) {
         var formulariosHijos = document.getElementById('formulariosHijos');
@@ -503,7 +501,6 @@ function siguienteTurno() {
     document.getElementById('cajaDado').addEventListener("click",tirarDado);
 }
 
-
 //ajustes 
 
 function abrirAjustes() {
@@ -518,16 +515,34 @@ function abrirAjustes() {
 }
 
 function cargarDatos(){
+    var arrayDatos  = [];   
+    for (var i = 0; i < localStorage.length; i++) {
+        var arrayJugadores = [];
+        arrayJugadores.push(localStorage.key(i));
+        info = localStorage.getItem(localStorage.key(i)).split(",");
+        for (var j = 0; j < info.length; j++) {
+            arrayJugadores.push(String(info[j]).replace(/[\]\[\}\{\"\']+/g, ''));
+        }
+        arrayDatos.push(arrayJugadores);
+    }
+    document.getElementById('datosPartidas').innerHTML = "";
+    document.getElementById('datosPartidas').innerHTML += '<th>FECHA</th><th>NOMBRE</th><th>COLOR</th><th>FICHAS SALVADAS</th><th>FICHAS ELIMINADAS</th>';
     
+    for (var i = 0; i < arrayDatos.length; i++) {
+        document.getElementById('datosPartidas').innerHTML += '<th>' + arrayDatos[i][0] + '</th><td>' + arrayDatos[i][1] + '</td><td>' + arrayDatos[i][2] + '</td><td>' + arrayDatos[i][3] + '</td><td>' + arrayDatos[i][4] + '</td><td>';
+    }
 }
 
 function cambiarVolumen() {
-    var volumen = document.getElementById("volumen").value;
-    document.getElementById("valorVolumen").textContent = volumen + "%";
-    
+    document.getElementById("fondo").volume = (document.getElementById("volumen").value/100);
+    document.getElementById("sonidoMover").volume = (document.getElementById("volumen").value/100);
+    document.getElementById("sonidoQuitarMuro").volume = (document.getElementById("volumen").value/100);
+    document.getElementById("sonidoMinotauro").volume = (document.getElementById("volumen").value/100);
+    document.getElementById("valorVolumen").textContent = document.getElementById("volumen").value + "%";
 }
 
 //finalizacion de partida
+
 function fichaFinal(casilla){
     salvadas = document.getElementById("salvadas" + turno).innerText[16];
     document.getElementById("salvadas" + turno ).innerText="Fichas salvadas:" + String(Number(salvadas)+1);
@@ -570,8 +585,8 @@ function guardarPartida(){
             var jugadorguardando = [];
             jugadorguardando.push(jugadores[0][i]);
             jugadorguardando.push(jugadores[1][i]);
-            jugadorguardando.push(document.getElementById(String(jugadores[1][i])).children[2]);
-            jugadorguardando.push(document.getElementById(String(jugadores[1][i])).children[3]);
+            jugadorguardando.push(document.getElementById(String(jugadores[1][i])).children[2].innerText[16]);
+            jugadorguardando.push(document.getElementById(String(jugadores[1][i])).children[3].innerText[15]);
             datosJugadores.push(jugadorguardando);
         }
         var fechaString = String(fecha.getDate()) + "/" + String(fecha.getMonth()+1) + "/" + String(fecha.getFullYear()) + "/" 
@@ -602,17 +617,21 @@ function reiniciarPartida(){
     document.getElementById('cajaFinal').style.opacity = "0";
     document.getElementById('formulariosHijos').innerHTML = "";
     document.getElementById('mesa').style.opacity = "0";
-    document.getElementById('formulario').style.display = 'block';
+    document.getElementById('formulario').style.display = 'flex';
+    document.getElementById('agregarBtn').disabled = false;
     for(var i = 0; i < coloresUtilizados.length; i++){
-        document.getElementById(String(coloresUtilizados[i])).innerHTML = '<img src="img/img' + coloresUtilizados[i] + '.jpg"><p id="nombre' + coloresUtilizados[i] + '"></p>';
+        document.getElementById(String(coloresUtilizados[i])).innerHTML = "";
+        document.getElementById(String(coloresUtilizados[i])).innerHTML += '<img src="img/img' + coloresUtilizados[i] + '.jpg"><p id="nombre' + coloresUtilizados[i] + '"></p>';
     }
     document.getElementById('tablero').innerHTML = '';
 }
 
 //sonidos
+
 function reproducirSonidoFondo() {
     var sonidoBoton = document.getElementById('fondo');
     sonidoBoton.play();
+    document.getElementById("fondo").volume = 0.5;
 }
 
 function reproducirSonidoMovimiento() {
