@@ -525,16 +525,22 @@ function cargarDatos(){
         }
         arrayDatos.push(arrayJugadores);
     }
+    console.log(arrayDatos);
     document.getElementById('datosPartidas').innerHTML = "";
     document.getElementById('datosPartidas').innerHTML += '<th>FECHA</th><th>NOMBRE</th><th>COLOR</th><th>FICHAS SALVADAS</th><th>FICHAS ELIMINADAS</th>';
     document.getElementById('datosPartidas').innerHTML += '<th>12/11/2023</th><td>Amine</td><td>Rojo</td><td>2</td><td>1</td>';
     document.getElementById('datosPartidas').innerHTML += '<th>12/11/2023</th><td>Eloy</td><td>Amarillo</td><td>1</td><td>2</td>';
 
+    var contador = 0;
     for (var i = 0; i < arrayDatos.length; i++) {
-        for (var j = 0; j < 5; j++) {
-        document.getElementById('datosPartidas').innerHTML += '<th>' + arrayDatos[i][0] + '</th><td>' + arrayDatos[i][j+1] + '</td><td>' + arrayDatos[i][j+2] + '</td><td>' + arrayDatos[i][j+3] + '</td><td>' + arrayDatos[i][j+4] + '</td><td>';
+            for(var j = 0; j < arrayDatos[i].length; j++){
+                if(contador+4 <= arrayDatos[i].length){
+                document.getElementById('datosPartidas').innerHTML += '<th>' + arrayDatos[i][0] + '</th><td>' + arrayDatos[i][1+contador] + '</td><td>' + arrayDatos[i][2+contador] + '</td><td>' + arrayDatos[i][3+contador] + '</td><td>' + arrayDatos[i][4+contador] + '</td>';
+                contador+=4;
+                }
+            }
+    
         }
-    }
 }
 
 function cambiarVolumen() {
@@ -602,7 +608,6 @@ function guardarPartida(){
 
 function reiniciarPartida(){
     contadorFormularios = 0;
-    coloresUtilizados = [];
     muros = [230, 231];
     cantidadMuros = 8;
     jugadores = [
@@ -612,7 +617,7 @@ function reiniciarPartida(){
     tiempoActual = 60;
     temporizador = null;
     turno =null;
-    orden = [];
+   
     dado = null;
     eliminados = [];
     fichaActual = null;
@@ -623,11 +628,12 @@ function reiniciarPartida(){
     document.getElementById('mesa').style.opacity = "0";
     document.getElementById('formulario').style.display = 'flex';
     document.getElementById('agregarBtn').disabled = false;
-    for(var i = 0; i < coloresUtilizados.length; i++){
-        document.getElementById(String(coloresUtilizados[i])).innerHTML = "";
-        document.getElementById(String(coloresUtilizados[i])).innerHTML += '<img src="img/img' + coloresUtilizados[i] + '.jpg"><p id="nombre' + coloresUtilizados[i] + '"></p>';
+    for(var i = 0; i < orden.length; i++){
+        document.getElementById(String(orden[i])).innerHTML = null;
+        document.getElementById(String(orden[i])).innerHTML += '<img src="img/img' + String(orden[i]) + '.jpg"><p id="nombre' + String(orden[i]) + '"></p>';
     }
     document.getElementById('tablero').innerHTML = '';
+    orden = [];
 }
 
 //sonidos

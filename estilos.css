@@ -13,8 +13,8 @@ body{
     align-items: center;
     position:fixed;
     top: 20%;
-    left: 20%;
-    right: 20%;
+    left: 25%;
+    right: 25%;
     bottom: 20%;
     z-index: 1;
 }
@@ -47,14 +47,6 @@ body{
 
 }
 
-.formulario-hijo label{
-    width: 97%;
-    background-color: white;
-    margin-bottom: 0px;
-    padding-left: 5px;
-    border-radius: 3px;
-}
-
 .formulario-hijo h3 {
     color: rgb(249, 249, 249);
     font-weight: bold;
@@ -63,6 +55,57 @@ body{
     -webkit-text-stroke-width:1px;
     -webkit-text-stroke-color: black;
 }
+.formulario-hijo label {
+    text-align: center;
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #000000; 
+    background-color:rgba(248, 253, 255, 0.422);
+   
+}
+.formulario-hijo input, select {
+    font-weight: bold;
+    font-family:cursive;
+    text-align: center;
+    background-color: #bdc3c7;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+.formulario-hijo select option[value="blanco"] {   
+    font-family:cursive;
+    text-align: center;
+    color: #000000; 
+    background-color: #ffffff; 
+}
+.formulario-hijo select option[value="amarillo"]{
+    font-family:cursive;
+    text-align: center;
+    color: #000000; 
+    background-color: #ffff00; 
+}
+  
+.formulario-hijo select option[value="rojo"]{
+    font-family:cursive;
+    text-align: center;
+    color: #ffffff; 
+    background-color: #ff0000; 
+}
+  
+.formulario-hijo select option[value="azul"] {
+    font-family:cursive;
+    text-align: center;
+    color: #ffffff; 
+    background-color: #0000ff; 
+}
+
+
+
 
 label {
     display: block;
@@ -86,9 +129,9 @@ select {
 
 .agregar-btn {
     background-color: gold;
-    color: black;
     font-family: Georgia, serif;
     font-weight:  bolder;
+    color: black;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
@@ -226,6 +269,7 @@ select {
 }
 
 #volumen {
+    grid-area: volumen;
     width: 100%;
     margin-top: 10px; /* Añade un espacio superior */
 }
@@ -239,6 +283,7 @@ select {
 }
 
 #videoExplicativo {
+    grid-area: video;
     width: auto;
     height: auto;
     margin-top: 20px;
@@ -263,6 +308,68 @@ select {
     background-color: darkgoldenrod;
     color: white;
 }
+
+/* tabla de datos guardados */
+#datosPartidas {
+    margin: 20px 0 20px 20px;
+    grid-area:tabla;
+    max-width: 50%;
+    
+}
+
+
+table {
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    border-collapse: collapse;
+}
+td {
+    background-color:white; 
+    border: 1px solid #d9d9d9;
+    color: #303030; 
+    padding: 10px; 
+}
+
+th, td {
+    text-align: center;
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: rgb(207, 207, 207);
+}
+
+.div-tabla-ins{
+display: flex;
+}
+
+/* explicacion del juego*/
+#instrucciones {
+    background-color: #f8f8f8;
+    margin-left: 5px;
+    padding: 20px;
+    padding-left: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+#instrucciones h3 {
+    color: #333;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+#instrucciones p {
+    color: #555;
+    line-height: 1.6;
+}
+
+
 
 .explicacionJuego {
     margin-top: 20px;
@@ -539,6 +646,20 @@ p.x{
                             'dado paso instruc instruc'
                             'tab tab tab tab'
     }
+    #menuAjustes{
+        overflow: scroll;
+    
+    }
+sdaf
+
+    #instrucciones{
+        height: 60%;
+    }
+    #datosPartida{
+        height: 40;
+        
+    }
+    
     
     .contenedor{
         flex-direction: row;
