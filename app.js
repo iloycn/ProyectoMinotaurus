@@ -530,9 +530,10 @@ function cargarDatos(){
     document.getElementById('datosPartidas').innerHTML += '<th>12/11/2023</th><td>Amine</td><td>Rojo</td><td>2</td><td>1</td>';
     document.getElementById('datosPartidas').innerHTML += '<th>12/11/2023</th><td>Eloy</td><td>Amarillo</td><td>1</td><td>2</td>';
 
-
     for (var i = 0; i < arrayDatos.length; i++) {
-        document.getElementById('datosPartidas').innerHTML += '<th>' + arrayDatos[i][0] + '</th><td>' + arrayDatos[i][1] + '</td><td>' + arrayDatos[i][2] + '</td><td>' + arrayDatos[i][3] + '</td><td>' + arrayDatos[i][4] + '</td><td>';
+        for (var j = 0; j < 5; j++) {
+        document.getElementById('datosPartidas').innerHTML += '<th>' + arrayDatos[i][0] + '</th><td>' + arrayDatos[i][j+1] + '</td><td>' + arrayDatos[i][j+2] + '</td><td>' + arrayDatos[i][j+3] + '</td><td>' + arrayDatos[i][j+4] + '</td><td>';
+        }
     }
 }
 
