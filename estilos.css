@@ -201,6 +201,43 @@ select {
     border-radius: 3px;
     margin-bottom: 20px;
 }
+#nombreblanco {
+    color: white;
+    font-size: x-large;
+    font-weight: bold;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+}
+#nombrerojo {
+    color:red;
+    font-size: x-large;
+    font-weight: bold;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+}
+#nombreamarillo  {
+    color:yellow;
+    font-size: x-large;
+    font-weight: bold;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+
+}
+#nombreazul {
+    color: blue;
+    font-size: x-large;
+    font-weight: bold;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+}
+#instruccion{
+    color:#303436;
+    font-size: large;
+    font-weight: bold;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+}
+
 
 #temporizador{
     float: left;
@@ -349,7 +386,6 @@ display: flex;
 /* explicacion del juego*/
 #instrucciones {
     background-color: #f8f8f8;
-    margin-left: 5px;
     padding: 20px;
     padding-left: 20px;
     border-radius: 10px;
@@ -539,7 +575,7 @@ img {
     margin: 5px;
     padding: 10px;
     display: flex;
-    background-color: #2ecc71;
+    background-color: rgba(207, 234, 205, 0.79);
     align-items: center;
     border: 5px solid black;
     border-radius: 5px;
@@ -650,7 +686,7 @@ p.x{
         overflow: scroll;
     
     }
-sdaf
+
 
     #instrucciones{
         height: 60%;
